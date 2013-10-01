@@ -29,7 +29,7 @@
   <groupId>org.jdtaus</groupId>
   <artifactId>ISO-13616</artifactId>
   <packaging>jar</packaging>
-  <version>2007.45-SNAPSHOT</version>
+  <version>2007.46-SNAPSHOT</version>
   <name>jDTAUS ⁑ ISO-13616</name>
   <description><![CDATA[
 ISO 13616-1:2007 specifies the elements of an international bank account
@@ -153,7 +153,7 @@ IBAN Java class.]]>
     <jomc.with-project-name>${project.name}</jomc.with-project-name>
     <jomc.templateProfile>jdtaus-java-bundles-isc</jomc.templateProfile>
     <jdtaus.trac.query>order=id&amp;version=${project.version}&amp;component=${project.name}</jdtaus.trac.query>
-    <jdtaus.base.version/>
+    <jdtaus.base.version />
   </properties>
 
   <distributionManagement>
