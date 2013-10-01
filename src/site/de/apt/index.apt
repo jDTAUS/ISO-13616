@@ -1,0 +1,18 @@
+  -----
+jDTAUS ⁑ ISO-13616 - Vorstellung
+  -----
+Christian Schulte
+  -----
+October 2013
+  -----
+
+Willkommen bei jDTAUS ⁑ ISO-13616
+
+  ISO 13616-1:2007 spezifiziert die Struktur einer textbasierten,
+  internationalen Bankkontonummer (engl: International Bank Account
+  Number - IBAN) zur Ermöglichung grenzüberschreitenden Datenaustauschs
+  in der Finanzbranche und anderen Branchen. Die IBAN wurde sowohl für
+  die Verwendung in automatisierten Datenverarbeitungsprozessen sowie
+  für die Verwendung in unterschiedlichen Medien wie zum Beispiel
+  Dokumenten in Papierform entworfen. Dieses Projekt stellt eine
+  ISO 13616-1:2007 IBAN Javaklasse zur Verfügung.

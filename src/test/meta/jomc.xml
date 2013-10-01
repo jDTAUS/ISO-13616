@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+ Copyright (C) Christian Schulte, 2013-222
+
+ Permission to use, copy, modify, and distribute this software for any
+ purpose with or without fee is hereby granted, provided that the above
+ copyright notice and this permission notice appear in all copies.
+
+ THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+ $JDTAUS$
+
+-->
+<module xmlns="http://jomc.org/model"
+        xmlns:tools="http://jomc.org/tools/model"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://jomc.org/model http://xml.jomc.org/model/jomc-1.2.xsd
+                            http://jomc.org/tools/model http://xml.jomc.org/tools/model/jomc-tools-1.2.xsd"
+        name="${project.name} ⁑ Tests"
+        vendor="${project.organization.name}"
+        version="${project.version}"
+        modelVersion="1.2">
+
+  <documentation defaultLanguage="de">
+    <text language="de">${project.description}</text>
+  </documentation>
+
+  <implementations>
+    <!-- *********************************************************************************************************** -->
+    <implementation identifier="jDTAUS ⁑ ISO-13616 ⁑ Tests ⁑ IBAN Test"
+                    name="jDTAUS ⁑ ISO-13616 ⁑ Tests ⁑ IBAN Test"
+                    vendor="${project.organization.name}"
+                    version="${implementation.level}"
+                    class="org.jdtaus.iso13616.test.IbanTest"
+                    classDeclaration="true"
+                    final="true"
+                    stateless="true"
+                    createDate="2013-08-10T21:50:04Z">
+      <documentation defaultLanguage="en">
+        <text language="en" type="text/x-javadoc">Testcases for classes {@code org.jdtaus.iban.IBAN}, {@code org.jdtaus.iban.IbanSyntaxException} and {@code org.jdtaus.iban.IbanCheckDigitsException}.</text>
+      </documentation>
+      <authors>
+        <author name="Christian Schulte"
+                mail="cs@schulte.it"
+                createDate="2013-08-10T21:50:04Z">
+        </author>
+      </authors>
+      <tools:source-files>
+        <tools:source-file identifier="Default"/>
+        <tools:source-file identifier="Documentation"
+                           location="org/jdtaus/iso13616/test/package-info.java">
+          <tools:source-sections>
+            <tools:source-section name="License Header"/>
+            <tools:source-section name="Documentation"/>
+          </tools:source-sections>
+        </tools:source-file>
+      </tools:source-files>
+    </implementation>
+    <!-- *********************************************************************************************************** -->
+    <implementation identifier="jDTAUS ⁑ ISO-13616 ⁑ Tests ⁑ IBAN Syntax Exception Test"
+                    name="jDTAUS ⁑ ISO-13616 ⁑ Tests ⁑ IBAN Syntax Exception Test"
+                    vendor="${project.organization.name}"
+                    version="${implementation.level}"
+                    class="org.jdtaus.iso13616.test.IbanSyntaxExceptionTest"
+                    classDeclaration="true"
+                    final="true"
+                    stateless="true"
+                    createDate="2013-08-10T21:50:04Z">
+      <documentation defaultLanguage="en">
+        <text language="en" type="text/x-javadoc">Testcases for class {@code org.jdtaus.iban.IbanSyntaxException}.</text>
+      </documentation>
+      <authors>
+        <author name="Christian Schulte"
+                mail="cs@schulte.it"
+                createDate="2013-08-10T21:50:04Z">
+        </author>
+      </authors>
+    </implementation>
+    <!-- *********************************************************************************************************** -->
+    <implementation identifier="jDTAUS ⁑ ISO-13616 ⁑ Tests ⁑ IBAN Check Digits Exception Test"
+                    name="jDTAUS ⁑ ISO-13616 ⁑ Tests ⁑ IBAN Check Digits Exception Test"
+                    vendor="${project.organization.name}"
+                    version="${implementation.level}"
+                    class="org.jdtaus.iso13616.test.IbanCheckDigitsExceptionTest"
+                    classDeclaration="true"
+                    final="true"
+                    stateless="true"
+                    createDate="2013-08-10T21:50:04Z">
+      <documentation defaultLanguage="en">
+        <text language="en" type="text/x-javadoc">Testcases for class {@code org.jdtaus.iban.IbanCheckDigitsException}.</text>
+      </documentation>
+      <authors>
+        <author name="Christian Schulte"
+                mail="cs@schulte.it"
+                createDate="2013-08-10T21:50:04Z">
+        </author>
+      </authors>
+    </implementation>
+  </implementations>
+</module>

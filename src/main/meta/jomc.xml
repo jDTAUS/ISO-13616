@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+ Copyright (C) Christian Schulte, 2013-222
+
+ Permission to use, copy, modify, and distribute this software for any
+ purpose with or without fee is hereby granted, provided that the above
+ copyright notice and this permission notice appear in all copies.
+
+ THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+ $JDTAUS$
+
+-->
+<module xmlns="http://jomc.org/model"
+        xmlns:tools="http://jomc.org/tools/model"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://jomc.org/model http://xml.jomc.org/model/jomc-1.2.xsd
+                            http://jomc.org/tools/model http://xml.jomc.org/tools/model/jomc-tools-1.2.xsd"
+        name="${project.name}"
+        vendor="${project.organization.name}"
+        version="${project.version}"
+        modelVersion="1.2">
+
+  <documentation defaultLanguage="de">
+    <text language="de">${project.description}</text>
+  </documentation>
+
+  <implementations>
+    <!-- *********************************************************************************************************** -->
+    <implementation identifier="jDTAUS ⁑ ISO-13616 ⁑ IBAN"
+                    name="jDTAUS ⁑ ISO-13616 ⁑ IBAN"
+                    vendor="${project.organization.name}"
+                    version="${implementation.level}"
+                    class="org.jdtaus.iso13616.IBAN"
+                    classDeclaration="true"
+                    final="true"
+                    createDate="2013-08-10T21:50:04Z">
+      <documentation defaultLanguage="en">
+        <text language="en" type="text/html"><![CDATA[
+International Bank Account Number.
+<p>The IBAN structure is defined in ISO 13616-1 and consists of a two-letter ISO 3166-1 country code, followed by two
+check digits and up to thirty alphanumeric characters for a BBAN (Basic Bank Account Number) which has a fixed length
+per country and, included within it, a bank identifier with a fixed position and a fixed length per country. The
+check digits are calculated based on the scheme defined in ISO/IEC 7064 (MOD97-10). The Society for Worldwide
+Interbank Financial Telecommunication SCRL, SWIFT, has been designated by the ISO Technical Management Board to act
+as the Registration Authority for ISO 13616. Nationally-agreed, ISO 13616-compliant IBAN formats are submitted to the
+registration authority exclusively by the National Standards Body or the National Central Bank of the country. For
+further information see the <a href="../../../doc-files/IBAN-Registry_Release-45_April-2013.pdf">IBAN REGISTRY</a>.
+An updated version of the document may be found at <a href="http://www.swift.com">SWIFT</a>.</p>
+]]></text>
+      </documentation>
+      <authors>
+        <author name="Christian Schulte"
+                mail="cs@schulte.it"
+                createDate="2013-08-10T21:50:04Z">
+        </author>
+      </authors>
+      <tools:source-files>
+        <tools:source-file identifier="Default"/>
+        <tools:source-file identifier="Documentation"
+                           location="org/jdtaus/iso13616/package-info.java">
+          <tools:source-sections>
+            <tools:source-section name="License Header"/>
+            <tools:source-section name="Documentation"/>
+          </tools:source-sections>
+        </tools:source-file>
+      </tools:source-files>
+    </implementation>
+    <!-- *********************************************************************************************************** -->
+    <implementation identifier="jDTAUS ⁑ ISO-13616 ⁑ IBAN Format"
+                    name="jDTAUS ⁑ ISO-13616 ⁑ IBAN Format"
+                    vendor="${project.organization.name}"
+                    version="${implementation.level}"
+                    class="org.jdtaus.iso13616.IbanFormat"
+                    classDeclaration="true"
+                    final="true"
+                    stateless="true"
+                    createDate="2013-08-10T21:50:04Z">
+      <documentation defaultLanguage="en">
+        <text language="en" type="text/x-javadoc">Format of an international bank account number.</text>
+      </documentation>
+      <authors>
+        <author name="Christian Schulte"
+                mail="cs@schulte.it"
+                createDate="2013-08-10T21:50:04Z">
+        </author>
+      </authors>
+    </implementation>
+    <!-- *********************************************************************************************************** -->
+    <implementation identifier="jDTAUS ⁑ ISO-13616 ⁑ IBAN Syntax Exception"
+                    name="jDTAUS ⁑ ISO-13616 ⁑ IBAN Syntax Exception"
+                    vendor="${project.organization.name}"
+                    version="${implementation.level}"
+                    class="org.jdtaus.iso13616.IbanSyntaxException"
+                    classDeclaration="true"
+                    final="true"
+                    createDate="2013-08-10T21:50:04Z">
+      <documentation defaultLanguage="en">
+        <text language="en" type="text/x-javadoc">Gets thrown whenever parsing text to produce an international bank account number fails.</text>
+      </documentation>
+      <authors>
+        <author name="Christian Schulte"
+                mail="cs@schulte.it"
+                createDate="2013-08-10T21:50:04Z">
+        </author>
+      </authors>
+      <messages>
+        <message name="IBAN Syntax Exception Message">
+          <template defaultLanguage="en">
+            <text language="en">Malformed IBAN-syntax ''{0}'' at position {1,number}.</text>
+            <text language="de">Fehlerhafte IBAN-Syntax ''{0}'' an Position {1,number}.</text>
+          </template>
+          <arguments>
+            <argument index="0"
+                      name="Malformed Text">
+            </argument>
+            <argument index="1"
+                      name="Error Index"
+                      type="Number">
+            </argument>
+          </arguments>
+        </message>
+      </messages>
+    </implementation>
+    <!-- *********************************************************************************************************** -->
+    <implementation identifier="jDTAUS ⁑ ISO-13616 ⁑ IBAN Check Digits Exception"
+                    name="jDTAUS ⁑ ISO-13616 ⁑ IBAN Check Digits Exception"
+                    vendor="${project.organization.name}"
+                    version="${implementation.level}"
+                    class="org.jdtaus.iso13616.IbanCheckDigitsException"
+                    classDeclaration="true"
+                    final="true"
+                    createDate="2013-08-10T21:50:04Z">
+      <documentation defaultLanguage="en">
+        <text language="en" type="text/x-javadoc">Gets thrown whenever validation of the check digits of an international bank account number fails.</text>
+      </documentation>
+      <authors>
+        <author name="Christian Schulte"
+                mail="cs@schulte.it"
+                createDate="2013-08-10T21:50:04Z">
+        </author>
+      </authors>
+      <messages>
+        <message name="IBAN Check Digits Exception Message">
+          <template defaultLanguage="en">
+            <text language="en">Illegal check digits {1,number,00} in IBAN ''{0}''.</text>
+            <text language="de">Ungültige Prüfziffern {1,number,00} in IBAN ''{0}''.</text>
+          </template>
+          <arguments>
+            <argument index="0"
+                      name="IBAN">
+            </argument>
+            <argument index="1"
+                      name="Illegal Check Digits"
+                      type="Number">
+            </argument>
+          </arguments>
+        </message>
+      </messages>
+    </implementation>
+  </implementations>
+</module>

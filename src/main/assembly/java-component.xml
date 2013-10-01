@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+ Copyright (C) Christian Schulte, 2013-222
+
+ Permission to use, copy, modify, and distribute this software for any
+ purpose with or without fee is hereby granted, provided that the above
+ copyright notice and this permission notice appear in all copies.
+
+ THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+ $JDTAUS$
+
+-->
+<component xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/component/1.1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/component/1.1.1 http://maven.apache.org/xsd/component-1.1.1.xsd">
+  <fileSets>
+    <fileSet>
+      <directory>${remoteResourcesOutputDirectory}/META-INF</directory>
+      <fileMode>0444</fileMode>
+      <directoryMode>0755</directoryMode>
+      <outputDirectory>/</outputDirectory>
+      <lineEnding>dos</lineEnding>
+      <filtered>false</filtered>
+      <includes>
+        <include>LICENSE.txt</include>
+        <include>PROJECT.txt</include>
+        <include>PROJEKT.txt</include>
+      </includes>
+    </fileSet>
+  </fileSets>
+  <dependencySets>
+    <dependencySet>
+      <directoryMode>0755</directoryMode>
+      <fileMode>0555</fileMode>
+      <scope>runtime</scope>
+      <outputDirectory>/lib</outputDirectory>
+      <useProjectArtifact>true</useProjectArtifact>
+      <useProjectAttachments>false</useProjectAttachments>
+      <useTransitiveDependencies>false</useTransitiveDependencies>
+    </dependencySet>
+  </dependencySets>
+</component>
