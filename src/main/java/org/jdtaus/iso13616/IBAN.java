@@ -185,7 +185,7 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
             /**
              * Gets the maximum length of the part.
              *
-             * @return The maximum length of the part or {@code null}, if the part has no maximum length but fixed
+             * @return The maximum length of the part or {@code null}, if the part has no maximum length but a fixed
              * length.
              */
             private Integer getMaximumLength()
@@ -409,7 +409,7 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
     private String countryCode;
 
     /**
-     * Flag indicating the country of the IBAN belongs to the Single Euro Payments Area.
+     * Flag indicating the country of the IBAN is a member to the Single Euro Payments Area.
      * @serial
      */
     private boolean sepaCountry;
@@ -451,7 +451,7 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
      * Creates a new {@code IBAN} instance.
      *
      * @param countryCode The two-letter ISO 3166-1 country code of the IBAN.
-     * @param sepaCountry Flag indicating the country belongs to the Single Euro Payments Area.
+     * @param sepaCountry Flag indicating the country is a member to the Single Euro Payments Area.
      * @param bankIdentifier The bank identifier part of the BBAN of the IBAN.
      * @param branchIdentifier The branch identifier part of the BBAN of the IBAN or {@code null}.
      * @param electronicFormat The electronic format representation of the IBAN.
@@ -534,7 +534,7 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
     /**
      * Parses text from a BBAN string to produce an {@code IBAN} instance.
      *
-     * @param countryCode The country code of the IBAN to create.
+     * @param countryCode The two-letter ISO 3166-1 country code of the IBAN to create.
      * @param bban A string to parse BBAN characters from.
      *
      * @return The parsed value.
@@ -544,7 +544,7 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
      * standard, that is, {@code countryCode} is not contained in the array returned by method {@code getCountryCodes}.
      * @throws IbanSyntaxException if the parse fails or the length of {@code bban} is invalid.
      *
-     * @see #getCountryCode()
+     * @see #getCountryCodes()
      */
     public static IBAN parse( final String countryCode, final String bban ) throws IbanSyntaxException
     {
@@ -842,7 +842,8 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
      * @return The parsed value.
      *
      * @throws NullPointerException if {@code text} is {@code null}.
-     * @throws IllegalArgumentException if the parse fails or the length of {@code text} is invalid.
+     * @throws IllegalArgumentException if the parse fails, the length of {@code text} is invalid or if check digits
+     * validation of the parsed value fails.
      *
      * @see #parse(java.lang.String)
      */
@@ -872,7 +873,7 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
      *
      * @param c The character to check.
      *
-     * @return {@code true} if {@code c} is a character of the IBAN alphabet; {@code false} if not.
+     * @return {@code true} if {@code c} is a character of the IBAN alphabet; {@code false}, else.
      */
     public static boolean isIbanAlphabet( final char c )
     {
