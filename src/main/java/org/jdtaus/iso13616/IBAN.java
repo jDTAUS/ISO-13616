@@ -290,6 +290,9 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
     /** Mappings of two-letter ISO 3166-1 country codes to IBAN branch identifier part indices. */
     private static final Map<String, List<Number>> IBAN_BRANCH_ID_PARTS = new HashMap<String, List<Number>>( 128 );
 
+    /** Mappings of two-letter ISO 3166-1 country codes to IBAN country codes. */
+    private static final Map<String, String> IBAN_COUNTRY_CODES = new HashMap<String, String>( 128 );
+
     /** List of supported two-letter ISO 3166-1 country codes. */
     private static final List<String> COUNTRIES = new ArrayList<String>( 128 );
 
@@ -331,12 +334,18 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
                         final String bbanStructure = properties.getProperty( countries[i] + ".bban.structure" );
                         final String bbanBankIds = properties.getProperty( countries[i] + ".bban.bankidparts" );
                         final String bbanBranchIds = properties.getProperty( countries[i] + ".bban.branchidparts" );
+                        final String ibanCountryCode = properties.getProperty( countries[i] + ".iban.countrycode" );
                         final String ibanStructure = properties.getProperty( countries[i] + ".iban.structure" );
                         final String ibanBankIds = properties.getProperty( countries[i] + ".iban.bankidparts" );
                         final String ibanBranchIds = properties.getProperty( countries[i] + ".iban.branchidparts" );
                         final String sepa = properties.getProperty( countries[i] + ".sepa" );
 
                         SEPA_COUNTRY_FLAGS.put( countries[i], Boolean.valueOf( sepa ) );
+
+                        if ( ibanCountryCode != null )
+                        {
+                            IBAN_COUNTRY_CODES.put( countries[i], ibanCountryCode );
+                        }
 
                         if ( bbanStructure != null )
                         {
@@ -489,9 +498,36 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
     }
 
     /**
-     * Gets the two-letter ISO 3166-1 country code of the IBAN.
+     * Tests a given two-letter ISO 3166-1 country code to identify a country that is part of the Single Euro Payments
+     * Area. The <a href="../../../doc-files/EPC409-09.pdf">EPC List of SEPA Countries</a> document lists the countries
+     * and territories or dependencies which are part of the Single Euro Payment Area (SEPA). An updated version of the
+     * document may be found at <a href="http://www.europeanpaymentscouncil.eu">The European Payments Council (EPC)</a>.
      *
-     * @return The two-letter ISO 3166-1 country code of the IBAN.
+     * @param countryCode The two-letter ISO 3166-1 country code to test.
+     *
+     * @return {@code true}, if the country identified by {@code countryCode} is part of the Single Euro Payments Area;
+     * {@code false}, if not.
+     *
+     * @throws NullPointerException if {@code countryCode} is {@code null}.
+     *
+     * @see #getCountryCodes()
+     * @since 2007.46
+     */
+    public static boolean isSepaCountry( final String countryCode )
+    {
+        if ( countryCode == null )
+        {
+            throw new NullPointerException( "countryCode" );
+        }
+
+        final Boolean sepaCountry = SEPA_COUNTRY_FLAGS.get( countryCode );
+        return sepaCountry != null ? sepaCountry : false;
+    }
+
+    /**
+     * Gets the two-letter ISO 3166-1 country code identifying the country the IBAN belongs to.
+     *
+     * @return The two-letter ISO 3166-1 country code identifying the country the IBAN belongs to.
      *
      * @see #getCountryCodes()
      */
@@ -501,10 +537,12 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
     }
 
     /**
-     * Gets a flag indicating Single Euro Payments Area membership of the country of the IBAN.
+     * Gets a flag indicating the country of the IBAN to be part of the Single Euro Payments Area.
      *
-     * @return {@code true}, if the country of the IBAN is a member of the Single Euro Payments Area;
-     * {@code false}, else.
+     * @return {@code true}, if the country of the IBAN is part of the Single Euro Payments Area; {@code false}, else.
+     *
+     * @see #getCountryCode()
+     * @see #isSepaCountry(java.lang.String)
      */
     public boolean isSepaCountry()
     {
@@ -540,11 +578,12 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
      * @return The parsed value.
      *
      * @throws NullPointerException if {@code countryCode} or {@code bban} is {@code null}.
-     * @throws IllegalArgumentException if the country denoted by {@code countryCode} has not implemented the IBAN
+     * @throws IllegalArgumentException if the country identified by {@code countryCode} has not implemented the IBAN
      * standard, that is, {@code countryCode} is not contained in the array returned by method {@code getCountryCodes}.
      * @throws IbanSyntaxException if the parse fails or the length of {@code bban} is invalid.
      *
      * @see #getCountryCodes()
+     * @see #valueOf(java.lang.String, java.lang.String)
      */
     public static IBAN parse( final String countryCode, final String bban ) throws IbanSyntaxException
     {
@@ -557,15 +596,16 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
             throw new NullPointerException( "bban" );
         }
 
-        final Structure structure = BBAN_STRUCTURES.get( countryCode );
+        final String ibanCountryCode = toIbanCountryCode( countryCode );
+        final Structure structure = BBAN_STRUCTURES.get( ibanCountryCode );
 
         if ( structure == null )
         {
             throw new IllegalArgumentException( countryCode );
         }
 
-        final List<Number> bankIdParts = BBAN_BANK_ID_PARTS.get( countryCode );
-        final List<Number> branchIdParts = BBAN_BRANCH_ID_PARTS.get( countryCode );
+        final List<Number> bankIdParts = BBAN_BANK_ID_PARTS.get( ibanCountryCode );
+        final List<Number> branchIdParts = BBAN_BRANCH_ID_PARTS.get( ibanCountryCode );
         final boolean sepa_country = SEPA_COUNTRY_FLAGS.get( countryCode );
 
         // Parse the parts.
@@ -620,7 +660,7 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
         // Calculate checksum.
         final StringBuilder integer_builder = new StringBuilder( MAX_CHARACTERS * 2 );
         appendIso7064Digits( integer_builder, electronic_format_builder.toString() );
-        appendIso7064Digits( integer_builder, countryCode );
+        appendIso7064Digits( integer_builder, ibanCountryCode );
         appendIso7064Digits( integer_builder, "00" );
 
         final BigInteger integer = new BigInteger( integer_builder.toString() );
@@ -628,10 +668,10 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
         final String checksumPart = checksum.compareTo( BigInteger.TEN ) < 0 ? "0" + checksum : checksum.toString();
 
         comparables.add( 0, checksumPart );
-        comparables.add( 0, countryCode );
+        comparables.add( 0, ibanCountryCode );
 
         electronic_format_builder.insert( 0, checksumPart );
-        electronic_format_builder.insert( 0, countryCode );
+        electronic_format_builder.insert( 0, ibanCountryCode );
 
         return new IBAN( countryCode, sepa_country, bank_id_builder.toString(),
                          branch_id_builder.length() > 0 ? branch_id_builder.toString() : null,
@@ -865,6 +905,45 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
         catch ( final IbanCheckDigitsException e )
         {
             throw new IllegalArgumentException( text, e );
+        }
+    }
+
+    /**
+     * Parses text from a BBAN string to produce an {@code IBAN} instance.
+     * <p>Unlike the {@link #parse(String, String)} method this method throws an {@code IllegalArgumentException} if the
+     * parse fails or the length of {@code bban} is invalid.</p>
+     *
+     * @param countryCode The two-letter ISO 3166-1 country code of the IBAN to create.
+     * @param bban A string to parse BBAN characters from.
+     *
+     * @return The parsed value.
+     *
+     * @throws NullPointerException if {@code countryCode} or {@code bban} is {@code null}.
+     * @throws IllegalArgumentException if the country identified by {@code countryCode} has not implemented the IBAN
+     * standard, that is, {@code countryCode} is not contained in the array returned by method {@code getCountryCodes},
+     * if the parse fails, or if the length of {@code bban} is invalid.
+     *
+     * @see #parse(java.lang.String, java.lang.String)
+     * @since 2007.46
+     */
+    public static IBAN valueOf( final String countryCode, final String bban )
+    {
+        if ( countryCode == null )
+        {
+            throw new NullPointerException( "countryCode" );
+        }
+        if ( bban == null )
+        {
+            throw new NullPointerException( "bban" );
+        }
+
+        try
+        {
+            return IBAN.parse( countryCode, bban );
+        }
+        catch ( final IbanSyntaxException e )
+        {
+            throw new IllegalArgumentException( bban, e );
         }
     }
 
@@ -1251,7 +1330,7 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
         if ( this.string == null )
         {
             final StringBuilder b = new StringBuilder( 500 ).append( "{" );
-            b.append( "countryCode=" ).append( this.getCountryCode() ).
+            b.append( "countryCode=" ).append( this.countryCode ).
                 append( ", sepaCountry=" ).append( this.sepaCountry ).
                 append( ", bankIdentifier=" ).append( this.bankIdentifier ).
                 append( ", branchIdentifier=" ).append( this.branchIdentifier ).
@@ -1629,6 +1708,12 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
         }
 
         return letter_format_builder.toString();
+    }
+
+    private static String toIbanCountryCode( final String countryCode )
+    {
+        final String ibanCountryCode = IBAN_COUNTRY_CODES.get( countryCode );
+        return ibanCountryCode != null ? ibanCountryCode : countryCode;
     }
 
     // SECTION-END
