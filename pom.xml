@@ -29,7 +29,7 @@
   <groupId>org.jdtaus</groupId>
   <artifactId>ISO-13616</artifactId>
   <packaging>jar</packaging>
-  <version>2007.46-SNAPSHOT</version>
+  <version>2007.47-SNAPSHOT</version>
   <name>jDTAUS ⁑ ISO-13616</name>
   <description><![CDATA[
 ISO 13616-1:2007 specifies the elements of an international bank account
