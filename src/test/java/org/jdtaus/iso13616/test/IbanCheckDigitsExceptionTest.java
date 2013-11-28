@@ -47,7 +47,7 @@ import static org.junit.Assert.fail;
  * </dl>
  *
  * @author <a href="mailto:cs@schulte.it">Christian Schulte</a>
- * @version 1.0
+ * @version 1.1
  */
 // </editor-fold>
 // SECTION-END

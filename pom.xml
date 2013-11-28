@@ -144,7 +144,7 @@ IBAN Java class.]]>
 
   <properties>
     <!-- Model values. -->
-    <implementation.level>1.0</implementation.level>
+    <implementation.level>1.1</implementation.level>
     <!-- Plugin parameters. -->
     <maven.compiler.source>1.5</maven.compiler.source>
     <maven.compiler.target>1.5</maven.compiler.target>
