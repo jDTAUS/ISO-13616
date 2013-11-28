@@ -1898,6 +1898,28 @@ public class IbanTest
         assertEquals( "0123", bban.getBranchIdentifier() );
         assertTrue( bban.isSepaCountry() );
 
+        iban = IBAN.valueOf( "QA58DOHB00001234567890ABCDEFG" );
+        assertEquals( "DOHB", iban.getBankIdentifier() );
+        assertNull( iban.getBranchIdentifier() );
+        assertFalse( iban.isSepaCountry() );
+
+        iban = IBAN.valueOf( "QA58 DOHB 0000 1234 5678 90AB CDEF G" );
+        assertEquals( "DOHB", iban.getBankIdentifier() );
+        assertNull( iban.getBranchIdentifier() );
+        assertFalse( iban.isSepaCountry() );
+
+        bban = IBAN.parse( "QA", "DOHB00001234567890ABCDEFG" );
+        assertEquals( iban, bban );
+        assertEquals( "DOHB", bban.getBankIdentifier() );
+        assertNull( bban.getBranchIdentifier() );
+        assertFalse( bban.isSepaCountry() );
+
+        bban = IBAN.parse( "QA", "DOHB 0000 1234 5678 90AB CDEF G" );
+        assertEquals( iban, bban );
+        assertEquals( "DOHB", bban.getBankIdentifier() );
+        assertNull( bban.getBranchIdentifier() );
+        assertFalse( bban.isSepaCountry() );
+
         iban = IBAN.valueOf( "RO49AAAA1B31007593840000" );
         assertEquals( "AAAA", iban.getBankIdentifier() );
         assertNull( iban.getBranchIdentifier() );
@@ -2252,4 +2274,5 @@ public class IbanTest
     // SECTION-END
     // SECTION-START[Messages]
     // SECTION-END
+
 }
