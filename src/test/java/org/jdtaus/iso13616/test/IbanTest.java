@@ -185,6 +185,7 @@ public class IbanTest
         IBAN_COUNTRY_CODES.add( "IE" );
         IBAN_COUNTRY_CODES.add( "IL" );
         IBAN_COUNTRY_CODES.add( "IT" );
+        IBAN_COUNTRY_CODES.add( "JO" );
         IBAN_COUNTRY_CODES.add( "KZ" );
         IBAN_COUNTRY_CODES.add( "KW" );
         IBAN_COUNTRY_CODES.add( "LV" );
@@ -1791,6 +1792,28 @@ public class IbanTest
         assertEquals( "11101", bban.getBranchIdentifier() );
         assertTrue( bban.isSepaCountry() );
 
+        iban = IBAN.valueOf( "JO94CBJO0010000000000131000302" );
+        assertEquals( "CBJO", iban.getBankIdentifier() );
+        assertNull( iban.getBranchIdentifier() );
+        assertFalse( iban.isSepaCountry() );
+
+        iban = IBAN.valueOf( "JO94 CBJO 0010 0000 0000 0131 0003 02" );
+        assertEquals( "CBJO", iban.getBankIdentifier() );
+        assertNull( iban.getBranchIdentifier() );
+        assertFalse( iban.isSepaCountry() );
+
+        bban = IBAN.valueOf( "JO", "CBJO0010000000000131000302" );
+        assertEquals( iban, bban );
+        assertEquals( "CBJO", iban.getBankIdentifier() );
+        assertNull( iban.getBranchIdentifier() );
+        assertFalse( iban.isSepaCountry() );
+
+        bban = IBAN.valueOf( "JO", "CBJO 0010 0000 0000 0131 0003 02" );
+        assertEquals( iban, bban );
+        assertEquals( "CBJO", iban.getBankIdentifier() );
+        assertNull( iban.getBranchIdentifier() );
+        assertFalse( iban.isSepaCountry() );
+
         iban = IBAN.valueOf( "KZ86125KZT5004100100" );
         assertEquals( "125", iban.getBankIdentifier() );
         assertNull( iban.getBranchIdentifier() );
@@ -2211,24 +2234,28 @@ public class IbanTest
 
         iban = IBAN.valueOf( "PT50000201231234567890154" );
         assertEquals( "0002", iban.getBankIdentifier() );
-        assertEquals( "0123", iban.getBranchIdentifier() );
+//        assertEquals( "0123", iban.getBranchIdentifier() ); As of 2007.47, PT no longer provides a branch identifier.
+        assertNull( iban.getBranchIdentifier() );
         assertTrue( iban.isSepaCountry() );
 
         iban = IBAN.valueOf( "PT50 0002 0123 1234 5678 9015 4" );
         assertEquals( "0002", iban.getBankIdentifier() );
-        assertEquals( "0123", iban.getBranchIdentifier() );
+//        assertEquals( "0123", iban.getBranchIdentifier() ); As of 2007.47, PT no longer provides a branch identifier.
+        assertNull( iban.getBranchIdentifier() );
         assertTrue( iban.isSepaCountry() );
 
         bban = IBAN.valueOf( "PT", "000201231234567890154" );
         assertEquals( iban, bban );
         assertEquals( "0002", bban.getBankIdentifier() );
-        assertEquals( "0123", bban.getBranchIdentifier() );
+//        assertEquals( "0123", bban.getBranchIdentifier() ); As of 2007.47, PT no longer provides a branch identifier.
+        assertNull( bban.getBranchIdentifier() );
         assertTrue( bban.isSepaCountry() );
 
         bban = IBAN.valueOf( "PT", "0002 0123 1234 5678 9015 4" );
         assertEquals( iban, bban );
         assertEquals( "0002", bban.getBankIdentifier() );
-        assertEquals( "0123", bban.getBranchIdentifier() );
+//        assertEquals( "0123", bban.getBranchIdentifier() ); As of 2007.47, PT no longer provides a branch identifier.
+        assertNull( bban.getBranchIdentifier() );
         assertTrue( bban.isSepaCountry() );
 
         iban = IBAN.valueOf( "QA58DOHB00001234567890ABCDEFG" );
