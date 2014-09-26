@@ -22,14 +22,14 @@
   <parent>
     <groupId>org.jdtaus</groupId>
     <artifactId>jdtaus-isc-parent</artifactId>
-    <version>1.17</version>
+    <version>1.18</version>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jdtaus</groupId>
   <artifactId>ISO-13616</artifactId>
   <packaging>jar</packaging>
-  <version>2007.48-SNAPSHOT</version>
+  <version>2007.50-SNAPSHOT</version>
   <name>jDTAUS ⁑ ISO-13616</name>
   <description>ISO 13616-1:2007 specifies the elements of an international bank account number (IBAN) used to facilitate the processing of data internationally in data interchange, in financial environments as well as within and between other industries. The IBAN is designed for automated processing, but can also be used conveniently in other media interchange when appropriate (e.g. paper document exchange, etc.). ISO 13616-1:2007 does not specify internal procedures, file organization techniques, storage media, languages, etc. to be used in its implementation, nor is it designed to facilitate the routing of messages within a network. It is applicable to the textual data which might be conveyed through a system (network). This project provides a general purpose ISO 13616-1:2007 compatible IBAN Java class.</description>
   <url>${jdtaus.artifacts.url}/ISO-13616/${project.version}</url>
@@ -132,8 +132,10 @@
     <!-- Plugin parameters. -->
     <maven.compiler.source>1.5</maven.compiler.source>
     <maven.compiler.target>1.5</maven.compiler.target>
+    <checkstyle.skip>false</checkstyle.skip>
     <assembly.appendAssemblyId>false</assembly.appendAssemblyId>
     <mojo.animalsniffer.signature.artifactId>java15</mojo.animalsniffer.signature.artifactId>
+    <mojo.animalsniffer.signature.artifactVersion>1.0</mojo.animalsniffer.signature.artifactVersion>
     <jomc.with-project-name>${project.name}</jomc.with-project-name>
     <jomc.templateProfile>jdtaus-java-bundles-isc</jomc.templateProfile>
     <jdtaus.trac.query>order=id&amp;version=${project.version}&amp;component=${project.name}</jdtaus.trac.query>

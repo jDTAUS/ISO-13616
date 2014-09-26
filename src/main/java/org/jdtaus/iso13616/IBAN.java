@@ -76,7 +76,7 @@ import static java.util.FormattableFlags.UPPERCASE;
 // SECTION-END
 // SECTION-START[Annotations]
 // <editor-fold defaultstate="collapsed" desc=" Generated Annotations ">
-@javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.5", comments = "See http://www.jomc.org/jomc/1.5/jomc-tools-1.5" )
+@javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.7", comments = "See http://www.jomc.org/jomc/1.7/jomc-tools-1.7" )
 // </editor-fold>
 // SECTION-END
 public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, Serializable
@@ -619,11 +619,11 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
         final List<Comparable<?>> comparables = new ArrayList<Comparable<?>>( structure.getParts().size() + 2 );
         final ParseContext context =
             new ParseContext( bban, new ParsePosition( 0 ), bban.length() > 4 && bban.charAt( 4 ) == ' '
-                                                            ? IbanFormat.PRINT : IbanFormat.ELECTRONIC );
+                                                                ? IbanFormat.PRINT : IbanFormat.ELECTRONIC );
 
         for ( int p = 0, s0 = structure.getParts().size(); p < s0 && context.parsePosition.getErrorIndex() < 0; p++ )
         {
-            final Integer idKey = Integer.valueOf( p + 1 );
+            final Integer idKey = p + 1;
             final Structure.Part part = structure.getParts().get( p );
             final String chars = parsePart( context, part );
 
@@ -744,13 +744,13 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
                     final ParseContext context =
                         new ParseContext( text, pos,
                                           text.length() > begin_index + 4 && text.charAt( begin_index + 4 ) == ' '
-                                          ? IbanFormat.PRINT : IbanFormat.ELECTRONIC );
+                                              ? IbanFormat.PRINT : IbanFormat.ELECTRONIC );
 
                     for ( int p = 0, s0 = structure.getParts().size();
                           p < s0 && context.parsePosition.getErrorIndex() < 0;
                           p++ )
                     {
-                        final Integer idKey = Integer.valueOf( p + 1 );
+                        final Integer idKey = p + 1;
                         final Structure.Part part = structure.getParts().get( p );
                         final String chars = parsePart( context, part );
 
@@ -867,8 +867,8 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
             if ( iban == null || pos.getErrorIndex() != -1 || pos.getIndex() < text.length() )
             {
                 throw new IbanSyntaxException( text, pos.getErrorIndex() != -1
-                                                     ? pos.getErrorIndex()
-                                                     : pos.getIndex() );
+                                                         ? pos.getErrorIndex()
+                                                         : pos.getIndex() );
 
             }
         }
@@ -996,7 +996,7 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
                 final StringBuilder electronic_format_builder = new StringBuilder( MAX_CHARACTERS );
                 final ParseContext context =
                     new ParseContext( text, new ParsePosition( 0 ), text.length() > 4 && text.charAt( 4 ) == ' '
-                                                                    ? IbanFormat.PRINT : IbanFormat.ELECTRONIC );
+                                                                        ? IbanFormat.PRINT : IbanFormat.ELECTRONIC );
 
                 for ( int p = 0, s0 = structure.getParts().size();
                       p < s0 && context.parsePosition.getErrorIndex() < 0 && complete;
@@ -1126,10 +1126,10 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
      * <p>This method uses the {@code ELECTRONIC} format by default. The {@code PRINT} format can be used by specifying
      * the alternate form flag ({@code #}) in a format specifier.</p>
      *
-     * @param  formatter The {@code Formatter}.
-     * @param  flags The flags to modify the output format.
-     * @param  width The minimum number of characters to be written to the output.
-     * @param  precision The maximum number of characters to be written to the output.
+     * @param formatter The {@code Formatter}.
+     * @param flags The flags to modify the output format.
+     * @param width The minimum number of characters to be written to the output.
+     * @param precision The maximum number of characters to be written to the output.
      *
      * @throws IllegalFormatFlagsException if the {@code UPPERCASE} flag is set.
      */
@@ -1493,7 +1493,7 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
         next:
         for ( int index = context.parsePosition.getIndex(), text_len = context.text.length(), literal_index = 0,
             part_len = part.getFixedLength() != null
-                       ? part.getFixedLength().intValue() : part.getMaximumLength().intValue();
+                           ? part.getFixedLength().intValue() : part.getMaximumLength().intValue();
               index < text_len && index - start_index < part_len; index++, context.parsePosition.setIndex( index ) )
         {
             final char current = context.text.charAt( index );
@@ -1501,7 +1501,7 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
             if ( current == ' ' && part.getType() != 'e' )
             {
                 if ( context.format == IbanFormat.PRINT && context.length % 4 == 0
-                     && ( context.previous == null || context.previous.charValue() != ' ' ) )
+                         && ( context.previous == null || context.previous.charValue() != ' ' ) )
                 { // Skip letter format separator.
                     part_len++;
                     context.previous = Character.valueOf( current );
@@ -1533,8 +1533,8 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
                 case 'c':
                     // Upper and lower case alphanumeric characters (A-Z, a-z and 0-9)
                     if ( ( current >= 'A' && current <= 'Z' )
-                         || ( current >= 'a' && current <= 'z' )
-                         || ( current >= '0' && current <= '9' ) )
+                             || ( current >= 'a' && current <= 'z' )
+                             || ( current >= '0' && current <= '9' ) )
                     {
                         partBuilder.append( current );
                         context.length++;
