@@ -140,6 +140,10 @@
     <jomc.templateProfile>jdtaus-java-bundles-isc</jomc.templateProfile>
     <jdtaus.trac.query>order=id&amp;version=${project.version}&amp;component=${project.name}</jdtaus.trac.query>
     <jdtaus.base.version />
+    <!--
+    http://jira.codehaus.org/browse/MJAVADOC-414
+    -->
+    <maven-javadoc-plugin.artifact.version>2.9.1</maven-javadoc-plugin.artifact.version>
   </properties>
 
   <distributionManagement>
