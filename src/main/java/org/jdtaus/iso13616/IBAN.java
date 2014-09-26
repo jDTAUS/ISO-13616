@@ -500,7 +500,7 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
     /**
      * Tests a given two-letter ISO 3166-1 country code to identify a country that is part of the jurisdictional scope
      * of the Single Euro Payment Area (SEPA) Schemes.
-     * The <a href="../../../doc-files/EPC409-09 EPC List of SEPA Scheme Countries v2 0 - January 2014.pdf">
+     * The <a href="../../../doc-files/EPC409-09_EPC_List_of_SEPA_Scheme_Countries_v2_0_-_January_2014.pdf">
      * EPC List of SEPA Scheme Countries</a> document lists the countries and territories which are part of the
      * jurisdictional scope of the Single Euro Payment Area (SEPA) Schemes. An updated version of the document may be
      * found at <a href="http://www.europeanpaymentscouncil.eu">The European Payments Council (EPC)</a>.
