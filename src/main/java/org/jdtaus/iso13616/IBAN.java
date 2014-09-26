@@ -58,7 +58,7 @@ import static java.util.FormattableFlags.UPPERCASE;
  * Interbank Financial Telecommunication SCRL, SWIFT, has been designated by the ISO Technical Management Board to act
  * as the Registration Authority for ISO 13616. Nationally-agreed, ISO 13616-compliant IBAN formats are submitted to the
  * registration authority exclusively by the National Standards Body or the National Central Bank of the country. For
- * further information see the <a href="../../../doc-files/IBAN-Registry_Release-47_January-2014.pdf">IBAN REGISTRY</a>.
+ * further information see the <a href="../../../doc-files/IBAN-Registry_Release-50_September-2014.pdf">IBAN REGISTRY</a>.
  * An updated version of the document may be found at <a href="http://www.swift.com">SWIFT</a>.</p>
  *
  * <dl>
@@ -418,7 +418,7 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
     private String countryCode;
 
     /**
-     * Flag indicating the country of the IBAN is a member to the Single Euro Payments Area.
+     * Flag indicating the country of the IBAN is part of the jurisdictional scope of the SEPA Schemes.
      * @serial
      */
     private boolean sepaCountry;
@@ -460,7 +460,7 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
      * Creates a new {@code IBAN} instance.
      *
      * @param countryCode The two-letter ISO 3166-1 country code of the IBAN.
-     * @param sepaCountry Flag indicating the country is a member to the Single Euro Payments Area.
+     * @param sepaCountry Flag indicating the country is part of the jurisdictional scope of the SEPA Schemes.
      * @param bankIdentifier The bank identifier part of the BBAN of the IBAN.
      * @param branchIdentifier The branch identifier part of the BBAN of the IBAN or {@code null}.
      * @param electronicFormat The electronic format representation of the IBAN.
@@ -498,15 +498,17 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
     }
 
     /**
-     * Tests a given two-letter ISO 3166-1 country code to identify a country that is part of the Single Euro Payments
-     * Area. The <a href="../../../doc-files/EPC409-09.pdf">EPC List of SEPA Countries</a> document lists the countries
-     * and territories or dependencies which are part of the Single Euro Payment Area (SEPA). An updated version of the
-     * document may be found at <a href="http://www.europeanpaymentscouncil.eu">The European Payments Council (EPC)</a>.
+     * Tests a given two-letter ISO 3166-1 country code to identify a country that is part of the jurisdictional scope
+     * of the Single Euro Payment Area (SEPA) Schemes.
+     * The <a href="../../../doc-files/EPC409-09 EPC List of SEPA Scheme Countries v2 0 - January 2014.pdf">
+     * EPC List of SEPA Scheme Countries</a> document lists the countries and territories which are part of the
+     * jurisdictional scope of the Single Euro Payment Area (SEPA) Schemes. An updated version of the document may be
+     * found at <a href="http://www.europeanpaymentscouncil.eu">The European Payments Council (EPC)</a>.
      *
      * @param countryCode The two-letter ISO 3166-1 country code to test.
      *
-     * @return {@code true}, if the country identified by {@code countryCode} is part of the Single Euro Payments Area;
-     * {@code false}, if not.
+     * @return {@code true}, if the country identified by {@code countryCode} is part of the jurisdictional scope of the
+     * Single Euro Payment Area (SEPA) Schemes; {@code false}, if not.
      *
      * @throws NullPointerException if {@code countryCode} is {@code null}.
      *
@@ -537,9 +539,11 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
     }
 
     /**
-     * Gets a flag indicating the country of the IBAN to be part of the Single Euro Payments Area.
+     * Gets a flag indicating the country of the IBAN to be part of the jurisdictional scope of the Single Euro Payment
+     * Area (SEPA) Schemes.
      *
-     * @return {@code true}, if the country of the IBAN is part of the Single Euro Payments Area; {@code false}, else.
+     * @return {@code true}, if the country of the IBAN is part of the jurisdictional scope of the Single Euro Payment
+     * Area (SEPA) Schemes; {@code false}, else.
      *
      * @see #getCountryCode()
      * @see #isSepaCountry(java.lang.String)
