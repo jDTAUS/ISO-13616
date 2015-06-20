@@ -77,19 +77,29 @@ public class IbanTest
 {
     // SECTION-START[IbanTest]
 
-    /** Prefix for property names holding valid values formatted using electronic format. */
+    /**
+     * Prefix for property names holding valid values formatted using electronic format.
+     */
     private static final String VALID_ELECTRONIC_FORMAT_PREFIX = "valid.electronicformat";
 
-    /** Prefix for property names holding valid values formatted using letter format. */
+    /**
+     * Prefix for property names holding valid values formatted using letter format.
+     */
     private static final String VALID_LETTER_FORMAT_PREFIX = "valid.letterformat";
 
-    /** Prefix for property names holding invalid values. */
+    /**
+     * Prefix for property names holding invalid values.
+     */
     private static final String INVALID_PREFIX = "invalid.";
 
-    /** Set of IBAN country codes. */
+    /**
+     * Set of IBAN country codes.
+     */
     private static final Set<String> IBAN_COUNTRY_CODES = new HashSet<String>( 128 );
 
-    /** Set of EPC SEPA country codes. */
+    /**
+     * Set of EPC SEPA country codes.
+     */
     private static final Set<String> SEPA_COUNTRY_CODES = new HashSet<String>( 128 );
 
     static
@@ -189,6 +199,7 @@ public class IbanTest
         IBAN_COUNTRY_CODES.add( "KW" );
         IBAN_COUNTRY_CODES.add( "LV" );
         IBAN_COUNTRY_CODES.add( "LB" );
+        IBAN_COUNTRY_CODES.add( "LC" );
         IBAN_COUNTRY_CODES.add( "LI" );
         IBAN_COUNTRY_CODES.add( "LT" );
         IBAN_COUNTRY_CODES.add( "LU" );
@@ -1900,6 +1911,28 @@ public class IbanTest
         bban = IBAN.valueOf( "LB", "0999 0000 0001 0019 0122 9114" );
         assertEquals( iban, bban );
         assertEquals( "0999", bban.getBankIdentifier() );
+        assertNull( bban.getBranchIdentifier() );
+        assertFalse( bban.isSepaCountry() );
+
+        iban = IBAN.valueOf( "LC55HEMM000100010012001200023015" );
+        assertEquals( "HEMM", iban.getBankIdentifier() );
+        assertNull( iban.getBranchIdentifier() );
+        assertFalse( iban.isSepaCountry() );
+
+        iban = IBAN.valueOf( "LC55 HEMM 0001 0001 0012 0012 0002 3015" );
+        assertEquals( "HEMM", iban.getBankIdentifier() );
+        assertNull( iban.getBranchIdentifier() );
+        assertFalse( iban.isSepaCountry() );
+
+        bban = IBAN.valueOf( "LC", "HEMM000100010012001200023015" );
+        assertEquals( iban, bban );
+        assertEquals( "HEMM", bban.getBankIdentifier() );
+        assertNull( bban.getBranchIdentifier() );
+        assertFalse( bban.isSepaCountry() );
+
+        bban = IBAN.valueOf( "LC", "HEMM 0001 0001 0012 0012 0002 3015" );
+        assertEquals( iban, bban );
+        assertEquals( "HEMM", bban.getBankIdentifier() );
         assertNull( bban.getBranchIdentifier() );
         assertFalse( bban.isSepaCountry() );
 
