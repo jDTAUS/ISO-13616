@@ -45,7 +45,7 @@ import java.util.Locale;
 // SECTION-END
 // SECTION-START[Annotations]
 // <editor-fold defaultstate="collapsed" desc=" Generated Annotations ">
-@javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.7", comments = "See http://www.jomc.org/jomc/1.7/jomc-tools-1.7" )
+@javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.9", comments = "See http://www.jomc.org/jomc/1.9/jomc-tools-1.9" )
 // </editor-fold>
 // SECTION-END
 public class IbanCheckDigitsException extends Exception
@@ -152,7 +152,7 @@ public class IbanCheckDigitsException extends Exception
      * @return The text of the {@code <IBAN Check Digits Exception Message>} message for {@code locale}.
      */
     @SuppressWarnings({"unchecked", "unused", "PMD.UnnecessaryFullyQualifiedName"})
-    @javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.7", comments = "See http://www.jomc.org/jomc/1.7/jomc-tools-1.7" )
+    @javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.9", comments = "See http://www.jomc.org/jomc/1.9/jomc-tools-1.9" )
     private static String getIbanCheckDigitsExceptionMessage( final java.util.Locale locale, final java.lang.String iban, final java.lang.Number illegalCheckDigits )
     {
         java.io.BufferedReader reader = null;

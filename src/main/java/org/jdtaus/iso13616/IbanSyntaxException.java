@@ -45,7 +45,7 @@ import java.util.Locale;
 // SECTION-END
 // SECTION-START[Annotations]
 // <editor-fold defaultstate="collapsed" desc=" Generated Annotations ">
-@javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.7", comments = "See http://www.jomc.org/jomc/1.7/jomc-tools-1.7" )
+@javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.9", comments = "See http://www.jomc.org/jomc/1.9/jomc-tools-1.9" )
 // </editor-fold>
 // SECTION-END
 public class IbanSyntaxException extends Exception
@@ -151,7 +151,7 @@ public class IbanSyntaxException extends Exception
      * @return The text of the {@code <IBAN Syntax Exception Message>} message for {@code locale}.
      */
     @SuppressWarnings({"unchecked", "unused", "PMD.UnnecessaryFullyQualifiedName"})
-    @javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.7", comments = "See http://www.jomc.org/jomc/1.7/jomc-tools-1.7" )
+    @javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.9", comments = "See http://www.jomc.org/jomc/1.9/jomc-tools-1.9" )
     private static String getIbanSyntaxExceptionMessage( final java.util.Locale locale, final java.lang.String malformedText, final java.lang.Number errorIndex )
     {
         java.io.BufferedReader reader = null;

@@ -53,7 +53,7 @@ import static org.junit.Assert.fail;
 // SECTION-END
 // SECTION-START[Annotations]
 // <editor-fold defaultstate="collapsed" desc=" Generated Annotations ">
-@javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.7", comments = "See http://www.jomc.org/jomc/1.7/jomc-tools-1.7" )
+@javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.9", comments = "See http://www.jomc.org/jomc/1.9/jomc-tools-1.9" )
 // </editor-fold>
 // SECTION-END
 public class IbanCheckDigitsExceptionTest
@@ -108,7 +108,7 @@ public class IbanCheckDigitsExceptionTest
     // SECTION-START[Constructors]
     // <editor-fold defaultstate="collapsed" desc=" Generated Constructors ">
     /** Creates a new {@code IbanCheckDigitsExceptionTest} instance. */
-    @javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.7", comments = "See http://www.jomc.org/jomc/1.7/jomc-tools-1.7" )
+    @javax.annotation.Generated( value = "org.jomc.tools.SourceFileProcessor 1.9", comments = "See http://www.jomc.org/jomc/1.9/jomc-tools-1.9" )
     public IbanCheckDigitsExceptionTest()
     {
         // SECTION-START[Default Constructor]
