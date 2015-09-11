@@ -220,6 +220,7 @@ public class IbanTest
         IBAN_COUNTRY_CODES.add( "QA" );
         IBAN_COUNTRY_CODES.add( "SM" );
         IBAN_COUNTRY_CODES.add( "SA" );
+        IBAN_COUNTRY_CODES.add( "ST" );
         IBAN_COUNTRY_CODES.add( "RS" );
         IBAN_COUNTRY_CODES.add( "SK" );
         IBAN_COUNTRY_CODES.add( "SI" );
@@ -2377,6 +2378,28 @@ public class IbanTest
         bban = IBAN.valueOf( "SA", "8000 0000 6080 1016 7519" );
         assertEquals( iban, bban );
         assertEquals( "80", bban.getBankIdentifier() );
+        assertNull( bban.getBranchIdentifier() );
+        assertFalse( bban.isSepaCountry() );
+
+        iban = IBAN.valueOf( "ST68000100010051845310112" );
+        assertEquals( "00010001", iban.getBankIdentifier() );
+        assertNull( iban.getBranchIdentifier() );
+        assertFalse( iban.isSepaCountry() );
+
+        iban = IBAN.valueOf( "ST68 0001 0001 0051 8453 1011 2" );
+        assertEquals( "00010001", iban.getBankIdentifier() );
+        assertNull( iban.getBranchIdentifier() );
+        assertFalse( iban.isSepaCountry() );
+
+        bban = IBAN.valueOf( "ST", "000100010051845310112" );
+        assertEquals( iban, bban );
+        assertEquals( "00010001", bban.getBankIdentifier() );
+        assertNull( bban.getBranchIdentifier() );
+        assertFalse( bban.isSepaCountry() );
+
+        bban = IBAN.valueOf( "ST", "0001 0001 0051 8453 1011 2" );
+        assertEquals( iban, bban );
+        assertEquals( "00010001", bban.getBankIdentifier() );
         assertNull( bban.getBranchIdentifier() );
         assertFalse( bban.isSepaCountry() );
 

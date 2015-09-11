@@ -58,7 +58,7 @@ import static java.util.FormattableFlags.UPPERCASE;
  * Interbank Financial Telecommunication SCRL, SWIFT, has been designated by the ISO Technical Management Board to act
  * as the Registration Authority for ISO 13616. Nationally-agreed, ISO 13616-compliant IBAN formats are submitted to the
  * registration authority exclusively by the National Standards Body or the National Central Bank of the country. For
- * further information see the <a href="../../../doc-files/IBAN-Registry_Release-58_June-2015.pdf">IBAN REGISTRY</a>.
+ * further information see the <a href="../../../doc-files/IBAN-Registry_Release-60_September-2015.pdf">IBAN REGISTRY</a>.
  * An updated version of the document may be found at <a href="http://www.swift.com">SWIFT</a>.</p>
  *
  * <dl>
