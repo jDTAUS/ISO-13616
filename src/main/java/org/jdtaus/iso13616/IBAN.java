@@ -58,7 +58,7 @@ import static java.util.FormattableFlags.UPPERCASE;
  * Interbank Financial Telecommunication SCRL, SWIFT, has been designated by the ISO Technical Management Board to act
  * as the Registration Authority for ISO 13616. Nationally-agreed, ISO 13616-compliant IBAN formats are submitted to the
  * registration authority exclusively by the National Standards Body or the National Central Bank of the country. For
- * further information see the <a href="../../../doc-files/IBAN-Registry_Release-69_August-2016.pdf">IBAN REGISTRY</a>.
+ * further information see the <a href="../../../doc-files/IBAN-Registry_Release-73_January-2017.pdf">IBAN REGISTRY</a>.
  * An updated version of the document may be found at <a href="http://www.swift.com">SWIFT</a>.</p>
  *
  * <dl>
@@ -500,7 +500,7 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
     /**
      * Tests a given two-letter ISO 3166-1 country code to identify a country that is part of the jurisdictional scope
      * of the Single Euro Payment Area (SEPA) Schemes.
-     * The <a href="../../../doc-files/EPC409-09_EPC_List_of_SEPA_Scheme_Countries_v2_3_-_February_2016.pdf">
+     * The <a href="../../../doc-files/EPC409-09_EPC_List_of_SEPA_Scheme_Countries_v2_4_-_April_2016.pdf">
      * EPC List of SEPA Scheme Countries</a> document lists the countries and territories which are part of the
      * jurisdictional scope of the Single Euro Payment Area (SEPA) Schemes. An updated version of the document may be
      * found at <a href="http://www.europeanpaymentscouncil.eu">The European Payments Council (EPC)</a>.
