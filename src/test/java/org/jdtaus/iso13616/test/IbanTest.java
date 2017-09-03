@@ -1100,12 +1100,12 @@ public class IbanTest
     @Test public void Albania()
     {
         final IBAN iban = IBAN.valueOf( "AL47212110090000000235698741" );
-        assertEquals( "212", iban.getBankIdentifier() );
+        assertEquals( "21211009", iban.getBankIdentifier() );
         assertEquals( "1100", iban.getBranchIdentifier() );
         assertFalse( iban.isSepaCountry() );
 
         final IBAN bban = IBAN.valueOf( "AL", "212110090000000235698741" );
-        assertEquals( "212", bban.getBankIdentifier() );
+        assertEquals( "21211009", bban.getBankIdentifier() );
         assertEquals( "1100", bban.getBranchIdentifier() );
         assertFalse( bban.isSepaCountry() );
         assertEquals( bban, iban );
@@ -1710,7 +1710,7 @@ public class IbanTest
         final IBAN iban = IBAN.valueOf( "IS140159260076545510730339" );
         assertEquals( "01", iban.getBankIdentifier() );
         assertEquals( "59", iban.getBranchIdentifier() );
-        assertTrue( iban.isSepaCountry() );
+        assertTrue( iban.isSepaCountry() ); // TXT file incorrectly states this as false.
 
         final IBAN bban = IBAN.valueOf( "IS", "0159260076545510730339" );
         assertEquals( "01", bban.getBankIdentifier() );
@@ -1739,14 +1739,15 @@ public class IbanTest
 
     @Test public void Jordan()
     {
+        // Branch ID position information is missing in the PDF. Information is available in the TXT file only.
         final IBAN iban = IBAN.valueOf( "JO94CBJO0010000000000131000302" );
         assertEquals( "CBJO", iban.getBankIdentifier() );
-        assertNull( iban.getBranchIdentifier() );
+        assertEquals( "0010", iban.getBranchIdentifier() );
         assertFalse( iban.isSepaCountry() );
 
         final IBAN bban = IBAN.valueOf( "JO", "CBJO0010000000000131000302" );
         assertEquals( "CBJO", bban.getBankIdentifier() );
-        assertNull( bban.getBranchIdentifier() );
+        assertEquals( "0010", bban.getBranchIdentifier() );
         assertFalse( bban.isSepaCountry() );
         assertEquals( bban, iban );
 
@@ -2043,6 +2044,8 @@ public class IbanTest
 
     @Test public void Poland()
     {
+        // Bank and branch ID positions in the TXT file seem to be incorrect. The PDF contains a bank id example which
+        // has been used to correct the position information.
         final IBAN iban = IBAN.valueOf( "PL61109010140000071219812874" );
         assertEquals( "10901014", iban.getBankIdentifier() );
         assertNull( iban.getBranchIdentifier() );
@@ -2251,14 +2254,15 @@ public class IbanTest
 
     @Test public void ElSalvador()
     {
+        // Bank and branch ID positions in the PDF file seem to be incorrect. They are different in the TXT file.
         final IBAN iban = IBAN.valueOf( "SV62CENR00000000000000700025" );
         assertEquals( "CENR", iban.getBankIdentifier() );
-        assertNull( iban.getBranchIdentifier() );
+        assertEquals( "0000", iban.getBranchIdentifier() );
         assertFalse( iban.isSepaCountry() );
 
         final IBAN bban = IBAN.valueOf( "SV", "CENR00000000000000700025" );
         assertEquals( "CENR", bban.getBankIdentifier() );
-        assertNull( bban.getBranchIdentifier() );
+        assertEquals( "0000", bban.getBranchIdentifier() );
         assertFalse( bban.isSepaCountry() );
         assertEquals( bban, iban );
 

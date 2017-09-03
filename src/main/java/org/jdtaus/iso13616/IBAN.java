@@ -34,6 +34,7 @@ import java.text.ParseException;
 import java.text.ParsePosition;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Formattable;
 import java.util.Formatter;
 import java.util.HashMap;
@@ -42,6 +43,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
+
 import static java.util.FormattableFlags.ALTERNATE;
 import static java.util.FormattableFlags.LEFT_JUSTIFY;
 import static java.util.FormattableFlags.UPPERCASE;
@@ -58,7 +60,7 @@ import static java.util.FormattableFlags.UPPERCASE;
  * Interbank Financial Telecommunication SCRL, SWIFT, has been designated by the ISO Technical Management Board to act
  * as the Registration Authority for ISO 13616. Nationally-agreed, ISO 13616-compliant IBAN formats are submitted to the
  * registration authority exclusively by the National Standards Body or the National Central Bank of the country. For
- * further information see the <a href="../../../doc-files/IBAN-Registry_Release-73_January-2017.pdf">IBAN REGISTRY</a>.
+ * further information see the <a href="../../../doc-files/IBAN-Registry_Release-78-August-2017.pdf">IBAN REGISTRY</a>.
  * An updated version of the document may be found at <a href="http://www.swift.com">SWIFT</a>.</p>
  *
  * <dl>
@@ -275,20 +277,14 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
     /** Mappings of two-letter ISO 3166-1 country codes to BBAN structures. */
     private static final Map<String, Structure> BBAN_STRUCTURES = new HashMap<String, Structure>( 128 );
 
-    /** Mappings of two-letter ISO 3166-1 country codes to BBAN bank identifier part indices. */
-    private static final Map<String, List<Number>> BBAN_BANK_ID_PARTS = new HashMap<String, List<Number>>( 128 );
+    /** Mappings of two-letter ISO 3166-1 country codes to BBAN bank identifier indices. */
+    private static final Map<String, List<Integer>> BBAN_BANK_ID_INDICES = new HashMap<String, List<Integer>>( 128 );
 
-    /** Mappings of two-letter ISO 3166-1 country codes to BBAN branch identifier part indices. */
-    private static final Map<String, List<Number>> BBAN_BRANCH_ID_PARTS = new HashMap<String, List<Number>>( 128 );
+    /** Mappings of two-letter ISO 3166-1 country codes to BBAN branch identifier indices. */
+    private static final Map<String, List<Integer>> BBAN_BRANCH_ID_INDICES = new HashMap<String, List<Integer>>( 128 );
 
     /** Mappings of two-letter ISO 3166-1 country codes to IBAN structures. */
     private static final Map<String, Structure> IBAN_STRUCTURES = new HashMap<String, Structure>( 128 );
-
-    /** Mappings of two-letter ISO 3166-1 country codes to IBAN bank identifier part indices. */
-    private static final Map<String, List<Number>> IBAN_BANK_ID_PARTS = new HashMap<String, List<Number>>( 128 );
-
-    /** Mappings of two-letter ISO 3166-1 country codes to IBAN branch identifier part indices. */
-    private static final Map<String, List<Number>> IBAN_BRANCH_ID_PARTS = new HashMap<String, List<Number>>( 128 );
 
     /** Mappings of two-letter ISO 3166-1 country codes to IBAN country codes. */
     private static final Map<String, String> IBAN_COUNTRY_CODES = new HashMap<String, String>( 128 );
@@ -332,12 +328,10 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
                         }
 
                         final String bbanStructure = properties.getProperty( countries[i] + ".bban.structure" );
-                        final String bbanBankIds = properties.getProperty( countries[i] + ".bban.bankidparts" );
-                        final String bbanBranchIds = properties.getProperty( countries[i] + ".bban.branchidparts" );
+                        final String bbanBankIds = properties.getProperty( countries[i] + ".bban.bankid.indices" );
+                        final String bbanBranchIds = properties.getProperty( countries[i] + ".bban.branchid.indices" );
                         final String ibanCountryCode = properties.getProperty( countries[i] + ".iban.countrycode" );
                         final String ibanStructure = properties.getProperty( countries[i] + ".iban.structure" );
-                        final String ibanBankIds = properties.getProperty( countries[i] + ".iban.bankidparts" );
-                        final String ibanBranchIds = properties.getProperty( countries[i] + ".iban.branchidparts" );
                         final String sepa = properties.getProperty( countries[i] + ".sepa" );
 
                         SEPA_COUNTRY_FLAGS.put( countries[i], Boolean.valueOf( sepa ) );
@@ -350,35 +344,21 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
                         if ( bbanStructure != null )
                         {
                             BBAN_STRUCTURES.put( countries[i], parseStructure( bbanStructure ) );
-                            assert bbanBankIds != null :
-                                "Expected '" + countries[i] + ".bban.bankidparts' property to exists.";
 
                             if ( bbanBankIds != null )
                             {
-                                BBAN_BANK_ID_PARTS.put( countries[i], splitNumbers( bbanBankIds ) );
+                                BBAN_BANK_ID_INDICES.put( countries[i], parseIndices( bbanBankIds ) );
                             }
 
                             if ( bbanBranchIds != null )
                             {
-                                BBAN_BRANCH_ID_PARTS.put( countries[i], splitNumbers( bbanBranchIds ) );
+                                BBAN_BRANCH_ID_INDICES.put( countries[i], parseIndices( bbanBranchIds ) );
                             }
                         }
 
                         if ( ibanStructure != null )
                         {
                             IBAN_STRUCTURES.put( countries[i], parseStructure( ibanStructure ) );
-                            assert ibanBankIds != null :
-                                "Expected '" + countries[i] + ".iban.bankidparts' property to exists.";
-
-                            if ( ibanBankIds != null )
-                            {
-                                IBAN_BANK_ID_PARTS.put( countries[i], splitNumbers( ibanBankIds ) );
-                            }
-
-                            if ( ibanBranchIds != null )
-                            {
-                                IBAN_BRANCH_ID_PARTS.put( countries[i], splitNumbers( ibanBranchIds ) );
-                            }
                         }
                     }
                 }
@@ -556,7 +536,7 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
     /**
      * Gets the bank identifier part of the BBAN of the IBAN.
      *
-     * @return The bank identifier part of the BBAN of the IBAN.
+     * @return The bank identifier part of the BBAN of the IBAN or {@code null}.
      */
     public String getBankIdentifier()
     {
@@ -608,8 +588,8 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
             throw new IllegalArgumentException( countryCode );
         }
 
-        final List<Number> bankIdParts = BBAN_BANK_ID_PARTS.get( ibanCountryCode );
-        final List<Number> branchIdParts = BBAN_BRANCH_ID_PARTS.get( ibanCountryCode );
+        final List<Integer> bankIdIndices = BBAN_BANK_ID_INDICES.get( ibanCountryCode );
+        final List<Integer> branchIdIndices = BBAN_BRANCH_ID_INDICES.get( ibanCountryCode );
         final boolean sepa_country = SEPA_COUNTRY_FLAGS.get( countryCode );
 
         // Parse the parts.
@@ -623,7 +603,6 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
 
         for ( int p = 0, s0 = structure.getParts().size(); p < s0 && context.parsePosition.getErrorIndex() < 0; p++ )
         {
-            final Integer idKey = p + 1;
             final Structure.Part part = structure.getParts().get( p );
             final String chars = parsePart( context, part );
 
@@ -635,15 +614,6 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
                 }
 
                 electronic_format_builder.append( chars );
-
-                if ( bankIdParts != null && bankIdParts.contains( idKey ) )
-                {
-                    bank_id_builder.append( chars );
-                }
-                if ( branchIdParts != null && branchIdParts.contains( idKey ) )
-                {
-                    branch_id_builder.append( chars );
-                }
 
                 switch ( part.getType() )
                 {
@@ -659,6 +629,21 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
             { // Invalid part.
                 throw new IbanSyntaxException( bban, context.parsePosition.getErrorIndex() );
             }
+        }
+
+        // Extract bank id and branch id.
+        if ( bankIdIndices != null )
+        {
+            bank_id_builder.append( electronic_format_builder.subSequence( bankIdIndices.get( 0 ),
+                                                                           bankIdIndices.get( 1 ) ) );
+
+        }
+
+        if ( branchIdIndices != null )
+        {
+            branch_id_builder.append( electronic_format_builder.subSequence( branchIdIndices.get( 0 ),
+                                                                             branchIdIndices.get( 1 ) ) );
+
         }
 
         // Calculate checksum.
@@ -677,7 +662,7 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
         electronic_format_builder.insert( 0, checksumPart );
         electronic_format_builder.insert( 0, ibanCountryCode );
 
-        return new IBAN( countryCode, sepa_country, bank_id_builder.toString(),
+        return new IBAN( countryCode, sepa_country, bank_id_builder.length() > 0 ? bank_id_builder.toString() : null,
                          branch_id_builder.length() > 0 ? branch_id_builder.toString() : null,
                          electronic_format_builder.toString(), toLetterFormat( electronic_format_builder.toString() ),
                          comparables.toArray( new Comparable<?>[ comparables.size() ] ) );
@@ -734,8 +719,6 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
 
                 if ( structure != null )
                 { // Parse the parts.
-                    final List<Number> bankIdParts = IBAN_BANK_ID_PARTS.get( country_code );
-                    final List<Number> branchIdParts = IBAN_BRANCH_ID_PARTS.get( country_code );
                     final boolean sepa_country = SEPA_COUNTRY_FLAGS.get( country_code );
                     final StringBuilder electronic_format_builder = new StringBuilder( MAX_CHARACTERS );
                     final StringBuilder bank_id_builder = new StringBuilder( MAX_CHARACTERS );
@@ -750,7 +733,6 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
                           p < s0 && context.parsePosition.getErrorIndex() < 0;
                           p++ )
                     {
-                        final Integer idKey = p + 1;
                         final Structure.Part part = structure.getParts().get( p );
                         final String chars = parsePart( context, part );
 
@@ -764,15 +746,6 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
                             }
 
                             electronic_format_builder.append( chars );
-
-                            if ( bankIdParts != null && bankIdParts.contains( idKey ) )
-                            {
-                                bank_id_builder.append( chars );
-                            }
-                            if ( branchIdParts != null && branchIdParts.contains( idKey ) )
-                            {
-                                branch_id_builder.append( chars );
-                            }
 
                             switch ( part.getType() )
                             {
@@ -796,7 +769,25 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
 
                         if ( integer.remainder( INTEGER_97 ).equals( BigInteger.ONE ) )
                         {
-                            ret = new IBAN( country_code, sepa_country, bank_id_builder.toString(),
+                            final List<Integer> bankIdIndices = BBAN_BANK_ID_INDICES.get( country_code );
+                            final List<Integer> branchIdIndices = BBAN_BRANCH_ID_INDICES.get( country_code );
+
+                            if ( bankIdIndices != null )
+                            {
+                                bank_id_builder.append( electronic_format_builder.subSequence(
+                                    bankIdIndices.get( 0 ) + 4, bankIdIndices.get( 1 ) + 4 ) );
+
+                            }
+
+                            if ( branchIdIndices != null )
+                            {
+                                branch_id_builder.append( electronic_format_builder.subSequence(
+                                    branchIdIndices.get( 0 ) + 4, branchIdIndices.get( 1 ) + 4 ) );
+
+                            }
+
+                            ret = new IBAN( country_code, sepa_country,
+                                            bank_id_builder.length() > 0 ? bank_id_builder.toString() : null,
                                             branch_id_builder.length() > 0 ? branch_id_builder.toString() : null,
                                             electronic_format_builder.toString(),
                                             toLetterFormat( electronic_format_builder.toString() ),
@@ -1645,18 +1636,21 @@ public final class IBAN implements CharSequence, Comparable<IBAN>, Formattable, 
     }
 
     /**
-     * Splits a given string containing numbers separated by {@code |} characters to a list of numbers.
+     * Parses a given bank/branch id indices {@code String} like {@code 1-5} to produce a list of bank/branch id indices
+     * compatible to {@link CharSequence#subSequence(int, int)}.
      *
-     * @param str The string to split.
+     * @param str The string to parse.
      *
-     * @return The numbers of {@code str}.
+     * @return The indices of {@code str}.
      */
-    private static List<Number> splitNumbers( final String str )
+    private static List<Integer> parseIndices( final String str )
     {
-        final String[] parts = str.split( "\\|" );
-        final List<Number> numbers = new ArrayList<Number>( parts.length );
-        for ( int i = 0, l0 = parts.length; i < l0; numbers.add( Integer.valueOf( parts[i] ) ), i++ );
-        return numbers;
+        final String[] parts = str.split( "-" );
+        assert parts.length == 2 : "Unexpected bank/branch id indices '" + str + "'.";
+        final List<Integer> indices = new ArrayList<Integer>( parts.length );
+        indices.add( 0, Integer.valueOf( parts[0] ) - 1 );
+        indices.add( 1, Integer.valueOf( parts[1] ) );
+        return Collections.unmodifiableList( indices );
     }
 
     /**
