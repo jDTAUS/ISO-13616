@@ -2,7 +2,7 @@
 // <editor-fold defaultstate="collapsed" desc=" Generated License ">
 /*
  *   jDTAUS ⁑ ISO-13616
- *   Copyright (C) Christian Schulte, 2013-222
+ *   Copyright (C) Christian Schulte, 2013-223
  *
  *   Permission to use, copy, modify, and/or distribute this software for any
  *   purpose with or without fee is hereby granted, provided that the above
@@ -176,6 +176,7 @@ public class IbanTest
         SPECIFIED_IBAN_COUNTRY_CODES.add( "DK" ); // Denmark
         SPECIFIED_IBAN_COUNTRY_CODES.add( "DO" ); // Dominican Republic
         SPECIFIED_IBAN_COUNTRY_CODES.add( "EE" ); // Estonia
+        SPECIFIED_IBAN_COUNTRY_CODES.add( "EG" ); // Egypt
         SPECIFIED_IBAN_COUNTRY_CODES.add( "ES" ); // Spain
         SPECIFIED_IBAN_COUNTRY_CODES.add( "FI" ); // Finland
         SPECIFIED_IBAN_COUNTRY_CODES.add( "AX" ); // Åland Islands - FI
@@ -246,6 +247,7 @@ public class IbanTest
         SPECIFIED_IBAN_COUNTRY_CODES.add( "TN" ); // Tunisia
         SPECIFIED_IBAN_COUNTRY_CODES.add( "TR" ); // Turkey
         SPECIFIED_IBAN_COUNTRY_CODES.add( "UA" ); // Ukraine
+        SPECIFIED_IBAN_COUNTRY_CODES.add( "VA" ); // Vatican City State
         SPECIFIED_IBAN_COUNTRY_CODES.add( "VG" ); // Virgin Islands
         SPECIFIED_IBAN_COUNTRY_CODES.add( "XK" ); // Kosovo
     }
@@ -1369,6 +1371,20 @@ public class IbanTest
         assertEquals( iban, IBAN.valueOf( "EE38 2200 2210 2014 5685" ) );
     }
 
+    @Test public void Egypt()
+    {
+        final IBAN iban = IBAN.valueOf( "EG380019000500000000263180002" );
+        assertEquals( "0019", iban.getBankIdentifier() );
+        assertEquals( "0005", iban.getBranchIdentifier() );
+
+        final IBAN bban = IBAN.valueOf( "EG", "0019000500000000263180002" );
+        assertEquals( "0019", bban.getBankIdentifier() );
+        assertEquals( "0005", bban.getBranchIdentifier() );
+        assertEquals( bban, iban );
+
+        assertEquals( iban, IBAN.valueOf( "EG38 0019 0005 0000 0000 2631 8000 2" ) );
+    }
+
     @Test public void Spain()
     {
         final IBAN iban = IBAN.valueOf( "ES9121000418450200051332" );
@@ -2331,6 +2347,22 @@ public class IbanTest
         assertEquals( bban, iban );
 
         assertEquals( iban, IBAN.valueOf( "UA21 3223 1300 0002 6007 2335 6600 1" ) );
+    }
+
+    @Test public void VaticanCity()
+    {
+        final IBAN iban = IBAN.valueOf( "VA59001123000012345678" );
+        assertEquals( "001", iban.getBankIdentifier() );
+        assertNull( iban.getBranchIdentifier() );
+        assertFalse( iban.isSepaCountry() );
+
+        final IBAN bban = IBAN.valueOf( "VA", "001123000012345678" );
+        assertEquals( "001", bban.getBankIdentifier() );
+        assertNull( bban.getBranchIdentifier() );
+        assertFalse( bban.isSepaCountry() );
+        assertEquals( bban, iban );
+
+        assertEquals( iban, IBAN.valueOf( "VA59 0011 2300 0012 3456 78" ) );
     }
 
     @Test public void VirginIslands()
